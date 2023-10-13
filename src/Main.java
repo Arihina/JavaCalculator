@@ -3,14 +3,58 @@ import java.util.Scanner;
 
 public class Main
 {
+    public static class Calculator {
+        double num1, num2, result;
+        String operation;
+        Scanner input = new Scanner(System.in);
+        public void input(){
+            System.out.println("Enter the first number");
+            this.num1 = input.nextDouble();
+            System.out.println("Enter the second number");
+            this.num2 = input.nextDouble();
+            System.out.println("Enter the operation");
+            this.operation = input.next();
+        }
+        public void nextInput(){
+            System.out.println("Enter a number");
+            this.num1 = input.nextDouble();
+            System.out.println("Enter the operation");
+            this.operation = input.next();
+        }
+        public void print(){
+            System.out.println("Result = " + result);
+        }
+        public void calculate(){
+            switch (operation) {
+                case "+": result = num1 + num2; break;
+                case "-": result = num1 - num2; break;
+                case "*": result = num1 * num2; break;
+                case "/": result = num1 / num2; break;
+                case "%": result = num1 % num2; break;
+                default: result = 0.0; break;
+            }
+        }
+        public void nextCalculate(){
+            switch (operation) {
+                case "+": result += num1; break;
+                case "-": result -= num1; break;
+                case "*": result *= num1; break;
+                case "/": result /= num1; break;
+                case "%": result %= num1; break;
+                default: break;
+            }
+        }
+    }
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        double result = userInput(in);
+        Calculator calculator = new Calculator();
+        calculator.input();
+        calculator.calculate();
+        calculator.print();
+        Scanner input = new Scanner(System.in);
         String userAnswer;
-
         while(true) {
             System.out.println("Continue or exit? c/e");
-            userAnswer = in.next();
+            userAnswer = input.next();
             if (userAnswer.equals("e")){
                 System.out.println("Exit");
                 break;
@@ -20,55 +64,20 @@ public class Main
                 continue;
             }
             System.out.println("Continue the calculation or start a new one? c/n");
-            userAnswer = in.next();
+            userAnswer = input.next();
             if(userAnswer.equals("c")){
-                System.out.println("Enter a number");
-                double num = in.nextDouble();
-                System.out.println("Enter the operation");
-                String operation = in.next();
-                result = nextCalculate(num, result, operation);
-                System.out.println("Result = " + result);
+                calculator.nextInput();
+                calculator.nextCalculate();
+                calculator.print();
             }
             else if (userAnswer.equals("n")){
-                result = userInput(in);
+                calculator.input();
+                calculator.calculate();
+                calculator.print();
             }
             else{
                 System.out.println("Invalid input");
             }
         }
-    }
-    public static double userInput(Scanner in) {
-        System.out.println("Enter the first number");
-        double num1 = in.nextDouble();
-        System.out.println("Enter the second number");
-        double num2 = in.nextDouble();
-        System.out.println("Enter the operation");
-        String operation = in.next();
-        double result = calculate(num1, num2, operation);
-        System.out.println("Result = " + result);
-        return result;
-    }
-    public static double calculate(double num1, double num2, String operation) {
-        double result;
-        switch (operation) {
-            case "+": result = num1 + num2; break;
-            case "-": result = num1 - num2; break;
-            case "*": result = num1 * num2; break;
-            case "/": result = num1 / num2; break;
-            case "%": result = num1 % num2; break;
-            default: result = 0.0; break;
-        }
-        return result;
-    }
-    public static double nextCalculate(double num, double result, String operation) {
-        switch (operation) {
-            case "+": result += num; break;
-            case "-": result -= num; break;
-            case "*": result *= num; break;
-            case "/": result /= num; break;
-            case "%": result %= num; break;
-            default: break;
-        }
-        return result;
     }
 }
